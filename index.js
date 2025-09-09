@@ -1,21 +1,6 @@
 
 const leftLside = document.getElementById("left-aside");
 const cardConteiner = document.getElementById("card-conteiner")
-const addToCard = document.querySelectorAll(".add-to-card")
-console.log(addToCard)
-// addToCard.forEach(card =>{  
-
-// card.addEventListener("click", (e) => {
-//   if (e.target.classList.contains("add-to-cart")) {
-//     const card = e.target.closest(".card"); 
-//     const plantName = card.querySelector("h2").innerText; 
-//     const plantPrice = card.querySelector("h1").innerText; 
-//     const priceNumber = parseInt(plantPrice)
-//     console.log(plantName, priceNumber);
-    
-//   }
-// }); 
-// })
 
 
 
@@ -90,7 +75,7 @@ const displayPlants = (plants) => {
 
   plants.forEach(plant => {
     cardConteiner.innerHTML += `
-      <div id="cardBtn" class="card bg-base-100 shadow-sm">
+      <div id="cardBtn" class="card bg-base-100 shadow-sm ">
         <div class="card-body">
           <img class="w-full h-48 object-cover rounded-xl" src="${plant.image}" alt="${plant.name}">
           <div>
@@ -99,10 +84,10 @@ const displayPlants = (plants) => {
           </div>
           <div class="flex justify-between items-center">
             <button class="text-xl font-semibold bg-[#DCFCE7] p-3 rounded-3xl text-green-700">Fruit Tree</button>
-            <h1 class="text-xl font-bold"><span>৳</span>${plant.price}</h1>
+            <h1 class="text-xl font-bold">৳ <span class="price">${plant.price}</span ></h1>
           </div>
           <div class="mt-6">
-            <button class="btn btn-block bg-[#15803D] text-white rounded-3xl text-xl add-to-cart">Add to Cart</button>
+            <button id="addCartBtn" class="btn btn-block bg-[#15803D] text-white rounded-3xl text-xl ">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -111,7 +96,63 @@ const displayPlants = (plants) => {
 };
 
 loadAllCategories();
-// https://meet.google.com/ftu-jvcq-uhh
 
+const cart = {}; 
 
-// final to up
+cardConteiner.addEventListener('click', (e) => {
+  if (e.target.id === 'addCartBtn') {
+    const card = e.target.closest('.card');
+    const name = card.querySelector("h2").innerText;  
+    const price = Number(card.querySelector(".price").innerText); 
+
+    if (cart[name]) {
+      cart[name].quantity += 1;
+    } else {
+      cart[name] = { price: price, quantity: 1 };
+    }
+
+    renderCart();
+  }
+});
+
+function renderCart() {
+  const amountContainer = document.getElementById("amount-container");
+  amountContainer.innerHTML = "";
+
+  let grandTotal = 0;
+
+  for (let item in cart) {
+    const { price, quantity } = cart[item];
+    const total = price * quantity;
+    grandTotal += total;
+
+    amountContainer.innerHTML += `
+      <div class="mb-2 flex justify-between items-center bg-[#F0FDF4] p-2 rounded-md shadow-sm">
+        <div>
+          <h1 class="font-bold">${item}</h1>
+          <p><span>৳</span>${price} x ${quantity} = <b>৳${total}</b></p>
+        </div>
+        <button 
+          class="remove-btn text-red-600 font-bold text-xl" 
+          data-item="${item}">
+          ❌
+        </button>
+      </div>
+    `;
+  }
+
+  amountContainer.innerHTML += `
+    <div class="mt-4 p-2 bg-green-100 rounded-md flex justify-between">
+      <h2 class="text-xl font-bold">Total:</h2>
+      <h2 class="text-xl font-bold">৳${grandTotal}</h2>
+    </div>
+  `;
+
+  document.querySelectorAll(".remove-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const amountInfo = e.target.getAttribute("data-item");
+      delete cart[amountInfo]; 
+      renderCart(); 
+    });
+  });
+}
