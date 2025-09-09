@@ -69,7 +69,7 @@ const showTreesDisls = async(id)=>{
   displayPlant(ditals.plants)
 }
 const displayPlant = (plant)=>{
-  console.log(plant)
+  // console.log(plant)
   const detelsContainer = document.getElementById("detels-container");
   detelsContainer.innerHTML = `
   <div class="card-body">
@@ -84,8 +84,6 @@ const displayPlant = (plant)=>{
           </div>
         </div>
   `;
-
-
   document.getElementById("my_modal_5").showModal();
 }
 const displayPlants = (plants) => {
