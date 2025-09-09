@@ -2,10 +2,6 @@
 const leftLside = document.getElementById("left-aside");
 const cardConteiner = document.getElementById("card-conteiner")
 
-
-
-
-
 const loadAllCategories = async () => {
   try {
     const res = await fetch("https://openapi.programming-hero.com/api/categories");
@@ -65,6 +61,33 @@ const loadTreeCategories = (id) => {
     .catch(err => console.log(err));
 };
 
+const showTreesDisls = async(id)=>{
+  const url = `https://openapi.programming-hero.com/api/plant/${id}`
+  // console.log(url)
+  const res = await fetch(url)
+  const ditals = await res.json()
+  displayPlant(ditals.plants)
+}
+const displayPlant = (plant)=>{
+  console.log(plant)
+  const detelsContainer = document.getElementById("detels-container");
+  detelsContainer.innerHTML = `
+  <div class="card-body">
+          <img class="w-full h-48 object-cover rounded-xl" src="${plant.image}" alt="${plant.name}">
+          <div>
+            <h2 class="text-2xl font-bold">${plant.name}</h2>
+            <p class="text-justify text-sm ">${plant.description}</p>
+          </div>
+          <div class="flex justify-between items-center">
+            <button class="text-xl font-semibold bg-[#DCFCE7] p-3 rounded-3xl text-green-700">Fruit Tree</button>
+            <h1 class="text-xl font-bold">৳ <span class="price">${plant.price}</span ></h1>
+          </div>
+        </div>
+  `;
+
+
+  document.getElementById("my_modal_5").showModal();
+}
 const displayPlants = (plants) => {
   cardConteiner.innerHTML = "";
 
@@ -87,7 +110,7 @@ const displayPlants = (plants) => {
             <h1 class="text-xl font-bold">৳ <span class="price">${plant.price}</span ></h1>
           </div>
           <div class="mt-6">
-            <button id="addCartBtn" class="btn btn-block bg-[#15803D] text-white rounded-3xl text-xl ">Add to Cart</button>
+            <button onclick="showTreesDisls(${plant.id})" id="addCartBtn" class="btn btn-block bg-[#15803D] text-white rounded-3xl text-xl ">Add to Cart</button>
           </div>
         </div>
       </div>

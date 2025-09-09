@@ -120,12 +120,12 @@
         <div
           id="card-conteiner"
           class="col-span-8 grid md:grid-cols-3 grid-cols-1 gap-4"
-        ></div>
+        >
+          
+        </div>
         <aside class="col-span-2">
           <h1 class="text-black font-bold">Your Cart</h1>
-          <div id="amount-container">
-            
-          </div>
+          <div id="amount-container"></div>
         </aside>
       </div>
       <section class="pt-10 pb-10">
@@ -223,7 +223,21 @@
         </div>
       </div>
     </section>
-
+    <!-- Open the modal using ID.showModal() method -->
+          <button class="btn" onclick="my_modal_5.showModal()">
+            open modal
+          </button>
+          <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+            <div class="modal-box">
+             <div id="detels-container"></div>
+              <div class="modal-action">
+                <form method="dialog">
+                  <!-- if there is a button in form, it will close the modal -->
+                  <button class="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
     <footer class="bg-[#14532D] max-w-7xl mx-auto">
       <p class="text-white text-center text-[8px] p-2">
         © 2025 Green Earth. All Rights Reserved.
@@ -232,3 +246,4 @@
     <script src="index.js"></script>
   </body>
 </html>
+<!-- https://meet.google.com/bba-wotk-qqw -->
